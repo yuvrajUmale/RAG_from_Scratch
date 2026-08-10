@@ -1,3 +1,7 @@
 node_modules/
 dist/
 .env
+
+# Obsidian local UI state (not shared config)
+.obsidian/workspace.json
+.obsidian/graph.json
