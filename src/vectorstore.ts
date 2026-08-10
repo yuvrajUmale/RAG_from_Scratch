@@ -27,15 +27,24 @@ export async function buildTable(chunks: EmbeddedChunk[]): Promise<void> {
   await db.createTable(TABLE_NAME, rows, { mode: "overwrite" });
 }
 
-export async function search(queryEmbedding: number[], topK: number): Promise<ScoredChunk[]> {
+export async function search(
+  queryEmbedding: number[],
+  topK: number,
+  options: { source?: string } = {},
+): Promise<ScoredChunk[]> {
   const db = await lancedb.connect(DB_PATH);
   const table = await db.openTable(TABLE_NAME);
 
-  const rows = await table
-    .vectorSearch(queryEmbedding)
-    .distanceType("cosine")
-    .limit(topK)
-    .toArray();
+  let query = table.vectorSearch(queryEmbedding).distanceType("cosine");
+  if (options.source) {
+    // Metadata filter: narrows the ANN search to rows matching this scalar
+    // column *before* ranking by vector distance, not after. Escape single
+    // quotes since this value comes from a CLI flag (user input).
+    const escaped = options.source.replace(/'/g, "''");
+    query = query.where(`source = '${escaped}'`);
+  }
+
+  const rows = await query.limit(topK).toArray();
 
   // LanceDB returns cosine *distance* (0 = identical); Stage 1 used cosine
   // *similarity* (1 = identical) — convert so scores stay comparable.
@@ -46,4 +55,13 @@ export async function search(queryEmbedding: number[], topK: number): Promise<Sc
     embedding: Array.from(row.vector),
     score: 1 - row._distance,
   }));
+}
+
+/** Reads every row's text/source back out of the persisted table -- used by
+ * BM25 keyword search, which needs the full corpus text, not an ANN query. */
+export async function getAllChunks(): Promise<{ id: string; text: string; source: string }[]> {
+  const db = await lancedb.connect(DB_PATH);
+  const table = await db.openTable(TABLE_NAME);
+  const rows = (await table.query().toArray()) as { id: string; text: string; source: string }[];
+  return rows.map((r) => ({ id: r.id, text: r.text, source: r.source }));
 }

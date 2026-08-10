@@ -6,7 +6,8 @@
   "description": "Learning RAG from scratch: chunk -> embed -> retrieve -> generate",
   "scripts": {
     "index": "tsx src/index.ts",
-    "ask": "tsx src/ask.ts"
+    "ask": "tsx src/ask.ts",
+    "inspect": "tsx src/inspect.ts"
   },
   "dependencies": {
     "@lancedb/lancedb": "^0.37.1",
