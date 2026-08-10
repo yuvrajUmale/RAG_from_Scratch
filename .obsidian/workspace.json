@@ -1,0 +1,224 @@
+{
+  "main": {
+    "id": "a4142f55ecafb753",
+    "type": "split",
+    "children": [
+      {
+        "id": "f50885827da6e40f",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "08be3c71ddc84f75",
+            "type": "leaf",
+            "state": {
+              "type": "graph",
+              "state": {},
+              "icon": "lucide-git-fork",
+              "title": "Graph view"
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "vertical"
+  },
+  "left": {
+    "id": "aef5673fa489de65",
+    "type": "split",
+    "children": [
+      {
+        "id": "aea3ddc5e3f16bfd",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "adf22856a93df335",
+            "type": "leaf",
+            "state": {
+              "type": "file-explorer",
+              "state": {
+                "sortOrder": "alphabetical",
+                "autoReveal": false
+              },
+              "icon": "lucide-folder-closed",
+              "title": "Files"
+            }
+          },
+          {
+            "id": "817be8799c28a582",
+            "type": "leaf",
+            "state": {
+              "type": "search",
+              "state": {
+                "query": "",
+                "matchingCase": false,
+                "explainSearch": false,
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical"
+              },
+              "icon": "lucide-search",
+              "title": "Search"
+            }
+          },
+          {
+            "id": "09b3fdbaf6396394",
+            "type": "leaf",
+            "state": {
+              "type": "bookmarks",
+              "state": {},
+              "icon": "lucide-bookmark",
+              "title": "Bookmarks"
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 300
+  },
+  "right": {
+    "id": "1f38455c79fb675d",
+    "type": "split",
+    "children": [
+      {
+        "id": "92de12d7cf6da5c5",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "c5ef1e79961c8396",
+            "type": "leaf",
+            "state": {
+              "type": "backlink",
+              "state": {
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical",
+                "showSearch": false,
+                "searchQuery": "",
+                "backlinkCollapsed": false,
+                "unlinkedCollapsed": true
+              },
+              "icon": "links-coming-in",
+              "title": "Backlinks"
+            }
+          },
+          {
+            "id": "d792d5b4b8f95c21",
+            "type": "leaf",
+            "state": {
+              "type": "outgoing-link",
+              "state": {
+                "linksCollapsed": false,
+                "unlinkedCollapsed": true
+              },
+              "icon": "links-going-out",
+              "title": "Outgoing links"
+            }
+          },
+          {
+            "id": "d94ca317c6eea76f",
+            "type": "leaf",
+            "state": {
+              "type": "tag",
+              "state": {
+                "sortOrder": "frequency",
+                "useHierarchy": true,
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-tags",
+              "title": "Tags"
+            }
+          },
+          {
+            "id": "9201fa9fba0d5063",
+            "type": "leaf",
+            "state": {
+              "type": "all-properties",
+              "state": {
+                "sortOrder": "frequency",
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-archive",
+              "title": "All properties"
+            }
+          },
+          {
+            "id": "afaba3480d2bde96",
+            "type": "leaf",
+            "state": {
+              "type": "outline",
+              "state": {
+                "followCursor": false,
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-list",
+              "title": "Outline"
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 300,
+    "collapsed": true
+  },
+  "left-ribbon": {
+    "hiddenItems": {
+      "switcher:Open quick switcher": false,
+      "graph:Open graph view": false,
+      "canvas:Create new canvas": false,
+      "daily-notes:Open today's daily note": false,
+      "templates:Insert template": false,
+      "command-palette:Open command palette": false,
+      "bases:Create new base": false
+    }
+  },
+  "active": "08be3c71ddc84f75",
+  "lastOpenFiles": [
+    "node_modules/@xenova/transformers/package.json",
+    "rag.md",
+    "sample-docs/security-guidelines.md",
+    "sample-docs/remote-work-policy.md",
+    "sample-docs/pto-policy.md",
+    "sample-docs/onboarding-checklist.md",
+    "sample-docs/expense-reimbursement.md",
+    "rag.md.tmp.24316.96910883e62b",
+    "rag.md.tmp.24316.08538441035a",
+    "rag.md.tmp.24316.7be1c62cdb3d",
+    "node_modules/@esbuild/aix-ppc64",
+    "node_modules/@esbuild/win32-ia32",
+    "node_modules/@esbuild/win32-arm64",
+    "node_modules/@esbuild/sunos-x64",
+    "node_modules/fsevents",
+    "node_modules/@esbuild/openharmony-arm64",
+    "node_modules/@esbuild/openbsd-x64",
+    "node_modules/sharp/vendor/8.14.5/win32-x64/THIRD-PARTY-NOTICES.md",
+    "node_modules/@anthropic-ai/sdk/src/_vendor/partial-json-parser/README.md",
+    "node_modules/@anthropic-ai/sdk/src/internal/README.md",
+    "node_modules/@anthropic-ai/sdk/src/core/README.md",
+    "node_modules/json-schema-to-ts/README.md",
+    "node_modules/@protobufjs/utf8/README.md",
+    "node_modules/@protobufjs/utf8/CHANGELOG.md",
+    "node_modules/prebuild-install/CONTRIBUTING.md",
+    "node_modules/@anthropic-ai/sdk/README.md",
+    "node_modules/flatbuffers/readme.md",
+    "node_modules/@protobufjs/fetch/README.md",
+    "node_modules/@protobufjs/fetch/CHANGELOG.md",
+    "node_modules/prebuild-install/node_modules/tar-stream/README.md",
+    "node_modules/dotenv/README-es.md",
+    "node_modules/@protobufjs/pool/README.md",
+    "node_modules/node-abi/README.md",
+    "node_modules/tar-fs/README.md",
+    "node_modules/onnx-proto/README.md",
+    "node_modules/onnxruntime-web/lib/onnxjs/ort-schema/README.md",
+    "node_modules/protobufjs/cli/node_modules/jsdoc/templates/default/static/fonts/OpenSans-Regular-webfont.svg",
+    "node_modules/protobufjs/cli/node_modules/jsdoc/templates/default/static/fonts/OpenSans-LightItalic-webfont.svg",
+    "node_modules/protobufjs/cli/node_modules/jsdoc/templates/default/static/fonts/OpenSans-Light-webfont.svg",
+    "node_modules/protobufjs/cli/node_modules/jsdoc/templates/default/static/fonts/OpenSans-Italic-webfont.svg",
+    "node_modules/protobufjs/cli/node_modules/jsdoc/templates/default/static/fonts/OpenSans-BoldItalic-webfont.svg",
+    "node_modules/protobufjs/cli/node_modules/jsdoc/templates/default/static/fonts/OpenSans-Bold-webfont.svg"
+  ]
+}
