@@ -1,33 +1,19 @@
-import path from "node:path";
-import { fileURLToPath } from "node:url";
-import { loadCorpus } from "./loadDocs.js";
-import { embed, embedBatch } from "./embed.js";
-import { search, type EmbeddedChunk } from "./store.js";
+import { embed } from "./embed.js";
+import { search } from "./vectorstore.js";
 import { generate } from "./llm.js";
 
-const __dirname = path.dirname(fileURLToPath(import.meta.url));
-const CORPUS_DIR = path.join(__dirname, "..", "sample-docs");
 const TOP_K = 3;
-
-async function buildIndex(): Promise<EmbeddedChunk[]> {
-  const chunks = await loadCorpus(CORPUS_DIR);
-  const embeddings = await embedBatch(chunks.map((c) => c.text));
-  return chunks.map((chunk, i) => ({ ...chunk, embedding: embeddings[i] }));
-}
 
 async function main() {
   const question = process.argv.slice(2).join(" ").trim();
   if (!question) {
     console.error('Usage: npm run ask -- "your question"');
+    console.error('(Run `npm run index` first if you haven\'t built the index yet.)');
     process.exit(1);
   }
 
-  console.log("Indexing corpus...");
-  const index = await buildIndex();
-  console.log(`Indexed ${index.length} chunks from ${new Set(index.map((c) => c.source)).size} files.\n`);
-
   const queryEmbedding = await embed(question);
-  const retrieved = search(queryEmbedding, index, TOP_K);
+  const retrieved = await search(queryEmbedding, TOP_K);
 
   console.log("Retrieved chunks:");
   for (const r of retrieved) {
