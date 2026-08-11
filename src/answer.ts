@@ -71,7 +71,14 @@ export async function* answerQuestion(
   question: string,
   options: AskOptions = {},
 ): AsyncGenerator<AskEvent> {
-  const { source, hybrid = false, rerank = false, stream = false } = options;
+  // rerank defaults to on (Stage 6): the eval suite found vanilla vector
+  // search misses the "coworking space" blind spot and --hybrid alone lets
+  // out-of-corpus questions through with a max-possible fused score (RRF is
+  // rank-only, so a small corpus always has *a* rank-1 chunk regardless of
+  // real relevance) -- rerank was the only mode that correctly declined on
+  // every not-in-corpus case tested. hybrid stays opt-in, since rerank alone
+  // already matched hybrid+rerank's eval score.
+  const { source, hybrid = false, rerank = true, stream = false } = options;
   const topK = options.topK ?? DEFAULT_TOP_K;
 
   const queryEmbedding = await embed(question);

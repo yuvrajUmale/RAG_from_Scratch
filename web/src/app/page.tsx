@@ -35,7 +35,9 @@ export default function Home() {
   const [source, setSource] = useState("");
   const [topK, setTopK] = useState(3);
   const [hybrid, setHybrid] = useState(false);
-  const [rerank, setRerank] = useState(false);
+  // Defaults on -- Stage 6's eval suite found rerank the only mode that
+  // reliably declined to answer out-of-corpus questions (see rag.md).
+  const [rerank, setRerank] = useState(true);
   const [stream, setStream] = useState(true);
   const [busy, setBusy] = useState(false);
   const bottomRef = useRef<HTMLDivElement>(null);

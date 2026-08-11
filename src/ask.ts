@@ -6,7 +6,9 @@ function parseArgs(
   let source: string | undefined;
   let topK = 3;
   let hybrid = false;
-  let rerank = false;
+  // Defaults on as of Stage 6's eval suite -- see answer.ts for why.
+  // --rerank is still accepted (now a no-op) so old commands don't break.
+  let rerank = true;
   let stream = false;
   const rest: string[] = [];
   for (const arg of argv) {
@@ -18,6 +20,8 @@ function parseArgs(
       hybrid = true;
     } else if (arg === "--rerank") {
       rerank = true;
+    } else if (arg === "--no-rerank") {
+      rerank = false;
     } else if (arg === "--stream") {
       stream = true;
     } else {
@@ -31,7 +35,7 @@ async function main() {
   const { question, source, topK, hybrid, rerank, stream } = parseArgs(process.argv.slice(2));
   if (!question) {
     console.error(
-      'Usage: npm run ask -- "your question" [--source=filename.md] [--k=N] [--hybrid] [--rerank] [--stream]',
+      'Usage: npm run ask -- "your question" [--source=filename.md] [--k=N] [--hybrid] [--no-rerank] [--stream]',
     );
     console.error('(Run `npm run index` first if you haven\'t built the index yet.)');
     process.exit(1);
