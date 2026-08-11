@@ -1,7 +1,11 @@
 import * as lancedb from "@lancedb/lancedb";
-import type { EmbeddedChunk, ScoredChunk } from "./store.js";
+import type { EmbeddedChunk, ScoredChunk } from "./store";
 
-const DB_PATH = "./.lancedb";
+// Defaults to a path relative to wherever the process's cwd is (rag/, for
+// the CLI scripts). The web app's dev server runs from rag/web/ instead, so
+// it overrides this via RAG_DB_PATH (see rag/web/.env.local) to point back
+// at the same on-disk table rather than accidentally creating a second one.
+const DB_PATH = process.env.RAG_DB_PATH ?? "./.lancedb";
 const TABLE_NAME = "chunks";
 
 interface SearchResultRow {

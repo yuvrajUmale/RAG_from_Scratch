@@ -1,5 +1,5 @@
-import { search as vectorSearch, getAllChunks } from "./vectorstore.js";
-import { bm25Search } from "./keywordSearch.js";
+import { search as vectorSearch, getAllChunks } from "./vectorstore";
+import { bm25Search } from "./keywordSearch";
 
 export interface HybridResult {
   id: string;

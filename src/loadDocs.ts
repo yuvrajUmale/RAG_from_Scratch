@@ -1,6 +1,6 @@
 import { readdir, readFile } from "node:fs/promises";
 import path from "node:path";
-import { chunkText, type Chunk } from "./chunk.js";
+import { chunkText, type Chunk } from "./chunk";
 
 export async function loadCorpus(dir: string): Promise<Chunk[]> {
   const files = (await readdir(dir)).filter((f) => f.endsWith(".md"));
