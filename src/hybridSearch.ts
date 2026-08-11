@@ -12,7 +12,15 @@ export interface HybridResult {
 
 // The constant from the original RRF paper (Cormack et al.). Large enough
 // that rank 1 vs rank 2 doesn't dominate the fused score too aggressively.
-const RRF_K = 60;
+const RRF_K = 10;
+
+// A chunk ranked #1 by both vector and BM25 gets the highest possible fused
+// score: 1/(RRF_K+1) from each method, summed. Dividing every fused score by
+// this ceiling rescales results into (0, 1] -- comparable in *shape* to
+// cosine similarity's 0-1 range, so the same kind of min-score cutoff can be
+// applied in hybrid mode (raw RRF scores, ~0.016-0.033, were nowhere near
+// MIN_SCORE=0.4 and could never trigger it).
+const MAX_RRF_SCORE = 2 / (RRF_K + 1);
 
 /**
  * Combines vector search and BM25 keyword search via Reciprocal Rank Fusion:
@@ -57,7 +65,7 @@ export async function hybridSearch(
     .map(([id, score]) => ({
       id,
       ...chunkById.get(id)!,
-      score,
+      score: score / MAX_RRF_SCORE,
       vectorRank: vectorRank.get(id),
       keywordRank: keywordRank.get(id),
     }));

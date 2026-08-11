@@ -12,6 +12,16 @@ const DEFAULT_TOP_K = 3;
 // but 0.4 cleanly separates the two clusters we've actually measured so far.
 const MIN_SCORE = 0.4;
 
+// Hybrid mode's fused score is now normalized to (0, 1] (see hybridSearch.ts),
+// but it measures something different from cosine similarity -- "how highly
+// both/either signal ranked this chunk" rather than "semantic closeness" --
+// so it gets its own threshold rather than reusing MIN_SCORE. Chosen
+// empirically from the two logged regression cases: the "coworking space"
+// chunk (the one hybrid exists to rescue) normalizes to ~0.87, while the
+// "skip-level manager" noise chunk that derailed the "trip reimbursement"
+// answer normalizes to ~0.75 -- 0.8 sits cleanly between them.
+const HYBRID_MIN_SCORE = 0.8;
+
 function parseArgs(argv: string[]): { question: string; source?: string; topK: number; hybrid: boolean } {
   let source: string | undefined;
   let topK = DEFAULT_TOP_K;
@@ -49,21 +59,18 @@ async function main() {
   for (const r of retrieved) {
     const ranks =
       "vectorRank" in r ? ` (vecRank=${r.vectorRank ?? "-"}, kwRank=${r.keywordRank ?? "-"})` : "";
-    const belowCutoff = !hybrid && r.score < MIN_SCORE ? " (below cutoff, excluded)" : "";
+    const cutoff = hybrid ? HYBRID_MIN_SCORE : MIN_SCORE;
+    const belowCutoff = r.score < cutoff ? " (below cutoff, excluded)" : "";
     console.log(`  [${r.score.toFixed(4)}] ${r.source} — "${r.text.slice(0, 60)}..."${ranks}${belowCutoff}`);
   }
   console.log();
 
-  // The min-score cutoff is calibrated for cosine similarity (0-1 range);
-  // RRF's fused scores live on a different scale entirely, so it isn't
-  // meaningful to apply the same threshold in hybrid mode -- that's a gap
-  // to close if hybrid becomes the default (would need its own cutoff,
-  // tuned separately, or a per-source score normalization step).
-  const relevant = hybrid ? retrieved : retrieved.filter((r) => r.score >= MIN_SCORE);
+  const activeCutoff = hybrid ? HYBRID_MIN_SCORE : MIN_SCORE;
+  const relevant = retrieved.filter((r) => r.score >= activeCutoff);
   if (relevant.length === 0) {
     console.log("Answer:");
     console.log(
-      `No retrieved chunk scored above the relevance cutoff (${MIN_SCORE}) -- ` +
+      `No retrieved chunk scored above the relevance cutoff (${activeCutoff}) -- ` +
         "skipping generation rather than risk an answer built on weak context.",
     );
     return;
